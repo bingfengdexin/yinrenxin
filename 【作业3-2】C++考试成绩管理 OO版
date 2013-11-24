@@ -1,0 +1,291 @@
+
+冷月
+[学弟]	 
+#include<stdio.h> 
+#include<string.h> 
+#include<stdlib.h> 
+
+#define N 20 
+
+struct student 
+{ 
+char name[10]; //里面存放学员的姓名 
+char num[10]; //里面存放学员的学号 
+float score[4]; //score[0]里面放的是平均成绩，score[1]里面放的是第一课的成绩，score[2]里面放的是第二课的成绩，score[3]里面放的是第三课的成绩。 
+}stu[N]; 
+
+int cnt=0;/*学生总人数*/ 
+
+void newstudent();/*新添加新学生*/ 
+void dele_info();/*删除学生*/ 
+void insert_info();/*插入到已排序的学生中*/ 
+void sort();/*对未排序的学生进行排序按照平均成绩按大到小排*/ 
+void find();/*查找某个学生的信息*/ 
+void display();/*显示所有信息*/ 
+/////////////////////////////////////////////////////////// 
+void main() 
+{ 
+char a; 
+char b; 
+do 
+{ 
+printf("\t\t=================================================\n"); 
+printf("\t\t====== ======\n"); 
+printf("\t\t====== 学员管理系统 ======\n"); 
+printf("\t\t====== ======\n"); 
+printf("\t\t=================================================\n"); 
+printf("\n\n"); 
+printf("\t\t1.新添加学生\t\t\t2.删除学生\n\t\t3.插入学员\t\t\t4.对学生进行排序\n\t\t5.查找学生信息\t\t\t6.显示所有信息\n\t\t0.退出\n"); 
+printf("请选择功能："); 
+scanf("%c",&a); 
+fflush(stdin); 
+switch(a) 
+{ 
+case '1':newstudent(); 
+break; 
+case '2':dele_info(); 
+break; 
+case '3':insert_info(); 
+break; 
+case '4':sort(); 
+break; 
+case '5':find(); 
+break; 
+case '6':display(); 
+break; 
+case '0': 
+exit(0); 
+break; 
+default:printf("输入有误!请输入0~6的数!"); 
+} 
+fflush(stdin); 
+printf("\n是否回到主菜单(y/n):"); 
+scanf("%c",&b); 
+fflush(stdin); 
+if(b=='y'||b=='Y') 
+{ 
+system("cls");	
+} 
+else 
+{ 
+break; 
+} 
+}while(b=='y'||b=='Y'); 
+} 
+/////////////////////////////////////////////////////////// 
+//////录入学员/////// 
+void newstudent() 
+{ 
+int i=0,j; 
+float end; 
+char ch;//ch是选择是否继续的一个变量 
+do 
+{ 
+
+fflush(stdin); 
+printf("请输入学生学号："); 
+gets(stu[cnt].num); 
+fflush(stdin); 
+printf("请输入学生姓名"); 
+gets(stu[cnt].name); 
+fflush(stdin); 
+stu[cnt].score[0]=0; 
+for(j=1;j<4;j++) 
+{ 
+printf("请输入第%d门科目的成绩：",j); 
+scanf("%f",&stu[cnt].score[j]); 
+fflush(stdin); 
+} 
+cnt++; 
+fflush(stdin); 
+printf("是否要继续输入?(y/n):"); 
+ch=getchar();	
+fflush(stdin); 
+}while(ch=='y'||ch=='Y'); 
+system("cls"); 
+printf("您刚输入的内容为：\n"); 
+for(i=0;i<cnt;i++) 
+{ 
+end=0; 
+printf("学号为%s的学员的姓名为：%8s\n",stu[i].num,stu[i].name); 
+for(j=1;j<4;j++) 
+{ 
+printf("成绩分别为：%8.2f\n",stu[i].score[j]); 
+end=end+stu[i].score[j]; 
+} 
+printf("平均成绩为：%8.2f\n",stu[i].score[0]=end/3); 
+} 
+printf("\n"); 
+} 
+//////////////////////////////////////////////////// 
+///////删除学员//////// 
+void dele_info() 
+{ 
+int i,j,m; //a是输入的学号 
+char n,a[10]; 
+fflush(stdin); 
+printf("请输入要删除的学生学号："); 
+gets(a); 
+fflush(stdin); 
+for(i=0;i<=cnt;i++) 
+{ 
+if(strcmp(a,stu[i].num)==0) 
+{ 
+printf("已经找到!\n"); 
+m=0; 
+printf("是否确认删除?(y/n):"); 
+scanf("%c",&n); 
+fflush(stdin); 
+break; 
+} 
+else 
+{ 
+m=1; 
+} 
+} 
+if(m==1) 
+{ 
+printf("未找到该学员!\n"); 
+} 
+else 
+{ 
+if(n=='y'||n=='Y') 
+{ 
+for(j=i;j<cnt;j++) 
+{ 
+strcpy(stu[j].num,stu[j+1].num); 
+strcpy(stu[j].name,stu[j+1].name); 
+stu[j].score[0]=stu[j+1].score[0];	
+} 
+cnt--; 
+} 
+system("cls"); 
+for(m=0;m<cnt;m++) 
+{ 
+
+printf("学号为%s的学员的姓名为：%8s\n平均成绩为：%8.2f\n",stu[m].num,stu[m].name,stu[m].score[0]); 
+} 
+} 
+} 
+/////////////////////////////////////////////////////// 
+/////////插入学员////////// 
+void insert_info() 
+{ 
+int j,i; 
+float end=0; 
+char a,ch; 
+fflush(stdin); 
+printf("是否确定插入学员信息：(y/n)"); 
+a=getchar(); 
+fflush(stdin); 
+do 
+{ 
+if(a=='y'||a=='Y') 
+{ 
+printf("请输入要插入的信息：\n"); 
+printf("请输入学生姓名"); 
+gets(stu[cnt].name); 
+fflush(stdin); 
+printf("请输入学生学号："); 
+gets(stu[cnt].num); 
+fflush(stdin); 
+stu[cnt].score[0]=0; 
+for(j=1;j<4;j++) 
+{ 
+printf("请输入第%d门科目的成绩：",j); 
+scanf("%f",&stu[cnt].score[j]); 
+end=end+stu[cnt].score[j]; 
+stu[cnt].score[0]=end/3; 
+fflush(stdin); 
+} 
+cnt++; 
+fflush(stdin); 
+printf("是否要继续输入?(y/n):"); 
+ch=getchar();	
+fflush(stdin);	
+} 
+}while(ch=='y'||ch=='Y'); 
+system("cls"); 
+for(i=0;i<cnt;i++) 
+{ 
+printf("学号为%s的学员的姓名为：%8s\n",stu[i].num,stu[i].name); 
+for(j=1;j<4;j++) 
+{ 
+printf("成绩分别为：%8.2f\n",stu[i].score[j]); 
+} 
+printf("平均成绩为：%8.2f\n",stu[i].score[0]); 
+} 
+} 
+/////////////////////////////////////////// 
+/////排序//// 
+void sort() 
+{ 
+int i,j; 
+struct student stt; 
+for(i=0;i<cnt-1;i++) //排序 
+{ 
+for(j=0;j<cnt-i-1;j++) 
+{ 
+if(strcmp(stu[j].num,stu[j+1].num)>0) 
+{ 
+stt=stu[j]; 
+stu[j]=stu[j+1]; 
+stu[j+1]=stt; 
+} 
+} 
+} 
+system("cls"); 
+printf("排序后的结果是：\n"); 
+for(i=0;i<cnt;i++) 
+{ 
+printf("学号为：%8s的学生姓名为：%8s\n平均成绩为：%8.2f\n",stu[i].num,stu[i].name,stu[i].score[0]); 
+} 
+printf("\n"); 
+} 
+/////////////////////////////////////////// 
+//////////查找/////////////// 
+void find() 
+{ 
+int i; 
+char a[10]; 
+printf("请输入要查找的学生学号："); 
+scanf("%s",a); 
+system("cls"); 
+for(i=0;i<cnt;i++) 
+{ 
+if(strcmp(a,stu[i].num)==0) 
+{ 
+printf("学号为：%8s的学生姓名为：%8s\n平均成绩为：%8.2f\n",stu[i].num,stu[i].name,stu[i].score[0]); 
+} 
+} 
+if(i==cnt) 
+{ 
+printf("未找到该学员!"); 
+} 
+printf("\n"); 
+} 
+//////////////////////////////////////////// 
+/////////////显示所有信息///////////// 
+void display() 
+{ 
+int i,j; 
+struct student stt; 
+for(i=0;i<cnt-1;i++) //排序 
+{ 
+for(j=0;j<cnt-i-1;j++) 
+{ 
+if(strcmp(stu[j].num,stu[j+1].num)>0) 
+{ 
+stt=stu[j]; 
+stu[j]=stu[j+1]; 
+stu[j+1]=stt; 
+} 
+} 
+} 
+system("cls"); 
+for(i=0;i<cnt;i++) 
+{ 
+printf("学号为：%8s的学生姓名为：%8s\n平均成绩为：%8.2f\n",stu[i].num,stu[i].name,stu[i].score[0]); 
+} 
+printf("\n"); 
+} 
