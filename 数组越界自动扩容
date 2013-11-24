@@ -1,0 +1,22 @@
+#include "iostream"
+using namespace std;
+void main()
+{int p=0, pp=0,ppp=0; //三个计数器，标在输出数的后面
+int shaobing1[5];int shuzu[20];int shaobing2[5];
+for(int a=0;a<=4;a++){shaobing1[a]=5;shaobing2[a]=5;}
+for(int b=0;b<=19;b++){shuzu[b]=888;;}
+for(int c=0;c<25;c++){shuzu[c]=99;}
+for(int d=0;d<=4;d++) //输出 shaobing1 的5个数
+{p++;
+cout<<shaobing1[d]<<"\t"<<&shaobing1[d]<<"\t"<<p<<endl;
+}cout<<endl<<endl;
+for(int f=0;f<=19;f++) //输出 shuzu 的20个数
+{pp++;
+cout<<shuzu[f]<<"\t"<<&shuzu[f]<<"\t"<<pp<<endl;
+}cout<<endl;
+
+for(int e=0;e<=4;e++) //输出 shaobing2 的5个数
+{ppp++;
+cout<<shaobing2[e]<<"\t"<<&shaobing2[e]<<"\t"<<ppp<<endl;
+}cout<<endl<<endl;
+}
